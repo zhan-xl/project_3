@@ -1,0 +1,37 @@
+.profile-container {
+  display: grid;
+  grid-template-columns: minmax(150px, 200px) minmax(450px, 600px);
+  grid-template-rows: auto;
+  grid-row-gap: 12px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 600px){
+  .profile-container {
+    grid-template-columns: 150px 1fr;
+    justify-content: start;
+  }
+}
+
+.profile-avatar {
+  margin-top: 24px;
+  width: auto;
+  height: 84px;
+  border: 3px solid white;
+  border-radius: 42px;
+  grid-column: span 2;
+}
+
+.profile-username {
+  font-weight: 600;
+}
+
+.profile-join-time {
+  font-style: italic;
+  color: gray;
+}
+
+.description {
+  grid-column: span 2;
+  margin-bottom: 12px;
+}

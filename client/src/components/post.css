@@ -1,0 +1,53 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 60px auto;
+  border-left: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+
+  padding: 12px;
+}
+
+.grid-container:first-child {
+  border: 1px solid lightgray;
+}
+
+.flexbox-2 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.post-avatar {
+  width: auto;
+  height: 41px;
+  border-radius: 20px;
+}
+
+.post-avatar-div {
+  grid-row: span 3;
+  justify-self: center;
+}
+
+.content {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.username {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reply {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.date-and-time {
+  font-size: 12px;
+  color: gray;
+  padding-left: 12px;
+}
+
