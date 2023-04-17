@@ -9,22 +9,29 @@ export default function Home() {
   const {auth} = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
+  const [userName, setUserName] = useState("");
 
   useEffect( () => {
+    const fetchUserName = async () => {
+      const userName = await axios.get("/user/user");
+      setUserName(userName.data);
+      //console.log(userName.data);
+    }
       const fetchPosts = async () => {
-        const postRes = await axios.get("posts");
+        const postRes = await axios.get("post");
         postRes.data.sort((a, b) => {
           return a.postTime < b.postTime ? 1 : -1;
         })
         setPosts(postRes.data);
       }
       fetchPosts().then();
+      fetchUserName().then();
   }, []);
 
 
   return (
       <div>
-        <NavBar user={auth.user}></NavBar>
+        <NavBar user={userName}></NavBar>
         <PostContainer posts={posts}></PostContainer>
       </div>
   )

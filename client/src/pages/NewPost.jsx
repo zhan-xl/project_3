@@ -15,7 +15,7 @@ export default function NewPost() {
 
   async function post() {
     await axios.post(
-        "/new-post",
+        "post/new-post",
         JSON.stringify({
           postCont,
           postTime: new Date(),
