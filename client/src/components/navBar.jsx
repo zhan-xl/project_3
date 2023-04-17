@@ -1,8 +1,16 @@
 import React from "react";
 import "../style/navBar.css"
 import {Link} from "react-router-dom";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export default function NavBar(props) {
+  const navigate = useNavigate();
+  const handleLogOut = async () => {
+    console.log("this is the log out function");
+    await axios.put("/logOut", (req, res) => {});
+    navigate("/log-out");
+  }
 
   function isLoggedIn() {
     if (props.user) {
@@ -19,7 +27,7 @@ export default function NavBar(props) {
                 <span className="triangle"> &#9660;</span>
               </Link>
             </div>
-            <div className="navbar-button" ><Link to={"/log-out"}>Log out</Link></div>
+            <div className="navbar-button" onClick={handleLogOut}>Log out</div>
             {/*<img className="navbar-avatar"*/}
             {/*     src={require("../img/charlie-avatar.png")}*/}
             {/*     alt="charlie's avatar"></img>*/}

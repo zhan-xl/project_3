@@ -28,14 +28,13 @@ const LogIn = () => {
     try {
       const logInResponse = await axios.post(
           LOGIN_URL,
-          JSON.stringify({user}),
+          JSON.stringify({user, pwd}),
           {
             headers: {"Content-Type": "application/json"},
             withCredentials: true
           });
       const userId = logInResponse.data.userId;
-      const accessToken = logInResponse.data?.accessToken;
-      setAuth({user, pwd, userId, accessToken})
+      setAuth({user, userId})
       setUser("");
       setPwd("");
       navigate(from, { replace: true });

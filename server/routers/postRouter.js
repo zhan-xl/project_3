@@ -14,6 +14,7 @@ postRouter.post("/new-post", async (req, res) => {
 
 postRouter.get("/posts", async (req, res) => {
   try {
+
     const dbResponse = await PostModel.find({});
     res.send(dbResponse);
   } catch (err) {

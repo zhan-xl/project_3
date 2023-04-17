@@ -21,7 +21,7 @@ logInRouter.post("/", async (req, res) => {
     foundUser.refreshToken = refreshToken;
     await foundUser.save();
     res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-    res.send(true);
+    res.send(foundUser.id);
   } else {
     res.status(401);
   }
