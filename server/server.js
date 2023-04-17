@@ -7,7 +7,7 @@ const userRouter = require("./routers/userRouter");
 const postRouter = require("./routers/postRouter");
 const logOutRouter = require("./routers/logOutRouter");
 const cookieParser = require('cookie-parser');
-// const verifyJWT = require('./middleware/verifyJWT');
+const verifyJWT = require('./middleware/verifyJWT');
 
 const SIGN_UP_URL = "/signUp";
 const LOG_IN_URL = "/logIn";
@@ -18,12 +18,14 @@ const LOG_OUT_URL = "/logOut";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(verifyJWT);
 
 app.use(LOG_IN_URL, logInRouter);
 app.use(SIGN_UP_URL, signUpRouter);
-app.use(USER_URL, userRouter);
+// app.use(USER_URL, userRouter);
 app.use(POST_URL, postRouter);
+
+app.use(verifyJWT);
+
 app.use(LOG_OUT_URL, logOutRouter);
 
 const mongoUri = "mongodb+srv://zhanxl:xafzu9-decvov-fibNyd@xiaolinwebdev.sq1refr.mongodb.net/project3?retryWrites=true&w=majority";

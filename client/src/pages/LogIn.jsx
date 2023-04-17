@@ -51,11 +51,6 @@ const LogIn = () => {
     }
   }
 
-  function wait(time) {
-    return new Promise(resolve => {
-      setTimeout(resolve, time);
-    });
-  }
 
   return (<section className="container">
     <div className="sign-in">Sign in</div>
