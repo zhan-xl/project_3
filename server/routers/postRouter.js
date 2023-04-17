@@ -2,7 +2,6 @@ const PostModel = require("../schema/Post");
 const express = require("express")
 const postRouter = express.Router();
 
-
 postRouter.post("/new-post", async (req, res) => {
   try {
     const dbRes = await PostModel.create(req.body);
@@ -14,7 +13,6 @@ postRouter.post("/new-post", async (req, res) => {
 
 postRouter.get("/posts", async (req, res) => {
   try {
-
     const dbResponse = await PostModel.find({});
     res.send(dbResponse);
   } catch (err) {

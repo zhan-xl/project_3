@@ -21,9 +21,10 @@ export default function Home() {
       fetchPosts().then();
   }, []);
 
+
   return (
       <div>
-        <NavBar user={auth.user}></NavBar>
+        <NavBar ></NavBar>
         <PostContainer posts={posts}></PostContainer>
       </div>
   )
