@@ -7,7 +7,6 @@ const userRouter = require("./routers/userRouter");
 const postRouter = require("./routers/postRouter");
 const logOutRouter = require("./routers/logOutRouter");
 const cookieParser = require('cookie-parser');
-const verifyJWT = require('./middleware/verifyJWT');
 
 const SIGN_UP_URL = "/signUp";
 const LOG_IN_URL = "/logIn";
@@ -21,10 +20,8 @@ app.use(cookieParser());
 
 app.use(LOG_IN_URL, logInRouter);
 app.use(SIGN_UP_URL, signUpRouter);
-// app.use(USER_URL, userRouter);
+app.use(USER_URL, userRouter);
 app.use(POST_URL, postRouter);
-
-app.use(verifyJWT);
 
 app.use(LOG_OUT_URL, logOutRouter);
 
