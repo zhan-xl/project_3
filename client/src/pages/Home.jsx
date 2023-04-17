@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
       <div>
-        <NavBar ></NavBar>
+        <NavBar user={auth.user}></NavBar>
         <PostContainer posts={posts}></PostContainer>
       </div>
   )
