@@ -1,19 +1,30 @@
 const express = require('express');
 const logInRouter = express.Router();
 const UserModel = require("../schema/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
-logInRouter.post("/", (req, res) => {
-  const {user, pwd, des} = req.body;
-  if (!user || !pwd ) return res.status(400).json({"message": "Username and password are required"});
-  const joinDate = new Date();
-  const newUser = {user, pwd, des, joinDate};
-  UserModel.findOne(req.body)
-  .then((dbResponse) => {
-    res.send(JSON.stringify(dbResponse));
-  })
-  .catch((error) => {
-    res.status(500).send(error);
-  })
+logInRouter.post("/", async (req, res) => {
+  const {user, pwd} = req.body;
+  const foundUser = await UserModel.findOne({user});
+  if (!foundUser) {
+    return res.status(401);
+  }
+  const match = await bcrypt.compare(pwd.toString(), foundUser.pwd);
+  if (match) {
+    const refreshToken = jwt.sign(
+        {"username": foundUser.username},
+        process.env.REFRESH_TOKEN_SECRET,
+        {expiresIn: '1d'}
+    );
+    foundUser.refreshToken = refreshToken;
+    await foundUser.save();
+    res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+    res.send(true);
+  } else {
+    res.status(401);
+  }
 })
 
 module.exports = logInRouter;

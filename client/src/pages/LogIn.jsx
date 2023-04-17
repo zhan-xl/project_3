@@ -1,45 +1,44 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AuthContext from "../context/AuthProvider";
-import "./LogIn.css"
+import "../style/LogIn.css"
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
-const LOGIN_URL = "/log-in";
+const LOGIN_URL = "/logIn";
 
-export default function LogIn() {
+const LogIn = () => {
 
   const {setAuth} = useContext(AuthContext);
-
-  const userRef = useRef();
-  const errRef = useRef();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     setErrMsg("");
   }, [user, pwd]);
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(LOGIN_URL,
-          JSON.stringify({username: user, password: pwd,}),
+      const logInResponse = await axios.post(
+          LOGIN_URL,
+          JSON.stringify({user}),
           {
             headers: {"Content-Type": "application/json"},
             withCredentials: true
           });
-      console.log(JSON.stringify(res.data));
-      const userId = res.data.userId;
-      setAuth({user, pwd, userId})
+      const userId = logInResponse.data.userId;
+      const accessToken = logInResponse.data?.accessToken;
+      setAuth({user, pwd, userId, accessToken})
       setUser("");
       setPwd("");
-      await wait(500);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -61,14 +60,13 @@ export default function LogIn() {
 
   return (<section className="container">
     <div className="sign-in">Sign in</div>
-    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
+    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
     <form onSubmit={handleSubmit}>
       <label htmlFor="username" className="label">Username:</label>
       <input
           type="text"
           id="username"
           className="input"
-          ref={userRef}
           autoComplete="off"
           onChange={e => setUser(e.target.value)}
           value={user}
@@ -88,3 +86,5 @@ export default function LogIn() {
     <div className="sign-up-letter">No account? Sign up here.</div>
   </section>)
 }
+
+export default LogIn;

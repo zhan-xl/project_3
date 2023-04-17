@@ -28,7 +28,7 @@ export default function Profile () {
 
   return (
       <div>
-        <NavBar userId={userLogIn.userId} username={username}></NavBar>
+        <NavBar userId={userLogIn.userId} user={username}></NavBar>
         <ProfileContainer userId={userLogIn.userId} username={username}></ProfileContainer>
         <PostContainer userId={userLogIn.userId} username={username}></PostContainer>
       </div>

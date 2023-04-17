@@ -1,22 +1,9 @@
 import React, {useEffect, useState} from "react";
-import "./post.css"
+import "../style/post.css"
 import axios from "axios";
 import {Link} from "react-router-dom";
 
 export default function Post(props) {
-
-  const [username, setUserName] = useState("");
-
-  useEffect(() => {
-    async function fetchUserName() {
-      const res = await axios.get(props.userId);
-      return res.data.username;
-    }
-
-    fetchUserName().then(res => {
-      setUserName(res);
-    });
-  }, []);
 
   return (
       <div className="grid-container">
@@ -26,11 +13,11 @@ export default function Post(props) {
         </div>
         <div>
           <span className="username">
-            <Link to={"/profile"}>{username}</Link>
+            {props.user}
           </span>
           <span className="date-and-time">{props.postTime}</span>
         </div>
-        <div className="content">{props.content}</div>
+        <div className="content">{props.postCont}</div>
       </div>
   )
 }

@@ -1,20 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import "./navBar.css"
-import {json, Link} from "react-router-dom";
-import {UserLogIn} from "../App";
-import {compareArraysAsSet} from "@testing-library/jest-dom/dist/utils";
-import axios from "axios";
+import React from "react";
+import "../style/navBar.css"
+import {Link} from "react-router-dom";
 
 export default function NavBar(props) {
 
-  function logOut() {
-    localStorage.setItem("userLogIn",
-        JSON.stringify({logIn: false, userId: ""}));
-    window.location.reload();
-  }
-
   function isLoggedIn() {
-    if (props.username) {
+    if (props.user) {
       return (
           <div className="navbar-box-right">
             <div className="navbar-button">
@@ -24,11 +15,11 @@ export default function NavBar(props) {
             </div>
             <div className="navbar-username">
               <Link to={"/profile"}>
-                {props.username}
+                {props.user}
                 <span className="triangle"> &#9660;</span>
               </Link>
             </div>
-            <div className="navbar-button" onClick={logOut}>Log out</div>
+            <div className="navbar-button" ><Link to={"/log-out"}>Log out</Link></div>
             {/*<img className="navbar-avatar"*/}
             {/*     src={require("../img/charlie-avatar.png")}*/}
             {/*     alt="charlie's avatar"></img>*/}

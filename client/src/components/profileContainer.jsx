@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import "./profileContainer.css"
-import "./post.css"
+import "../style/profileContainer.css"
+import "../style/post.css"
 import axios from "axios";
 
 export default function ProfileContainer(props) {

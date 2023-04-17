@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   user: {type: String, unique: true, required: true},
   pwd: {type: String, required: true},
-  joinDate: Date,
-  des: String,
+  joinTime: Date,
+  perDescr: String,
   posts: {
     type: mongoose.Schema.Types.ObjectId,
     ref:"posts",
   },
+  refreshToken: String,
 }, {collection: "users"})
 
 module.exports = mongoose.model("User", userSchema);
