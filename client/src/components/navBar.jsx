@@ -3,12 +3,14 @@ import "../style/navBar.css"
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import SearchBar from "./searchBar";
 
 export default function NavBar(props) {
   const navigate = useNavigate();
   const handleLogOut = async () => {
     console.log("this is the log out function");
-    await axios.put("/logOut", (req, res) => {});
+    await axios.put("/logOut", (req, res) => {
+    });
     navigate("/log-out");
   }
 
@@ -51,6 +53,7 @@ export default function NavBar(props) {
       <div className='navbar-frame'>
         <div className="navbar-box-left">
           <div className="navbar-button"><Link to={"/"}>Home</Link></div>
+          <SearchBar/>
         </div>
         {isLoggedIn()}
       </div>
