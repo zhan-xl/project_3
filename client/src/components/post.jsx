@@ -4,6 +4,15 @@ import {Link} from "react-router-dom";
 
 export default function Post(props) {
 
+  async function updatePost() {
+    // api request to backend -- checks cookie token, if verified delete else no delete
+
+  }
+
+  async function deletePost() {
+
+  }
+
   return (
       <div className="grid-container">
         <div className="post-avatar-div">
@@ -17,7 +26,10 @@ export default function Post(props) {
           </Link>
           <span className="date-and-time">{new Date(
               props.postTime).toLocaleString()}</span>
+          <span className="update-btn" onClick={updatePost}>Update</span>
+          <span className="delete-btn" onClick={deletePost}>Delete</span>
         </div>
+
         <div className="content">{props.postCont}</div>
       </div>
   )

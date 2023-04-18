@@ -1,15 +1,13 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "../components/navBar";
 import PostContainer from "../components/postContainer";
 import ProfileContainer from "../components/profileContainer";
-import AuthContext from "../context/AuthProvider";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 
 export default function Profile() {
   const location = useLocation();
   const {userName} = location.state;
-  const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
