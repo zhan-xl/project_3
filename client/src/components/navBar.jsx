@@ -22,7 +22,7 @@ export default function NavBar(props) {
               </Link>
             </div>
             <div className="navbar-username">
-              <Link to={"/profile"}>
+              <Link to={"/profile"} state={{userName: props.user}}>
                 {props.user}
                 <span className="triangle"> &#9660;</span>
               </Link>

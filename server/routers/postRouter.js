@@ -19,6 +19,16 @@ postRouter.get("/", async (req, res) => {
     res.send(err);
   }
 })
+
+postRouter.get("/:userName", async (req, res) => {
+  try {
+    const userName = req.params.userName;
+    const dbResponse = await PostModel.find({postedBy: userName});
+    res.send(dbResponse);
+  } catch (err) {
+    res.send(err);
+  }
+})
 //
 // app.get("/posts/:userId", (req, res) => {
 //   PostModel.findPostByUserId(req.params.userId).then(dbResponse => {

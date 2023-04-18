@@ -12,10 +12,12 @@ export default function Post(props) {
                src={require("../img/charlie-avatar.png")}/>
         </div>
         <div>
-          <span className="username">
-            {props.user}
-          </span>
-          <span className="date-and-time">{props.postTime}</span>
+          <Link to={"/profile"}
+                state={{userName: props.user}}
+                className="username">{props.user}
+          </Link>
+          <span className="date-and-time">{new Date(
+              props.postTime).toLocaleString()}</span>
         </div>
         <div className="content">{props.postCont}</div>
       </div>

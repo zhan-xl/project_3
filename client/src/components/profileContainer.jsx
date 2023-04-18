@@ -5,29 +5,25 @@ import axios from "axios";
 
 export default function ProfileContainer(props) {
 
-  const [joinTime, setJoinTime] = useState(new Date().toString());
-  const [description, setDescription] = useState("Default");
+  const [user, setUser] = useState([]);
 
-  useEffect( () => {
-    if(props.username) {
-      async function fetchUserInformation() {
-        const res = await axios.get(props.userId);
-        return res.data;
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (props.user) {
+        const userResponse = await axios.get("/user/findByName/" + props.user);
+        setUser(userResponse.data);
       }
-      fetchUserInformation().then(res => {
-        setDescription(res.personalDescription);
-        setJoinTime(res.joinTime);
-      });
     }
+    fetchUser();
   }, []);
 
   return (
       <div className="profile-container">
         <img className="profile-avatar"
              src={require("../img/charlie-avatar.png")}></img>
-        <div className="profile-username">{props.username}</div>
-        <div className="profile-join-time">{new Date(joinTime).toLocaleString()}</div>
-        <div className="description">{description}</div>
+        <div className="profile-username">{user.user}</div>
+        <div className="profile-join-time">Joined on: {new Date(user.joinTime).toLocaleString().split(",")[0]}</div>
+        <div className="description">{user.perDescr}</div>
       </div>
   )
 }

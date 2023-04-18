@@ -2,34 +2,29 @@ import React, {useContext, useEffect, useState} from "react";
 import NavBar from "../components/navBar";
 import PostContainer from "../components/postContainer";
 import ProfileContainer from "../components/profileContainer";
-import axios from "axios";
 import AuthContext from "../context/AuthProvider";
+import axios from "axios";
+import {useLocation} from "react-router-dom";
 
-export default function Profile () {
+export default function Profile() {
+  const location = useLocation();
+  const {userName} = location.state;
+  const [posts, setPosts] = useState([]);
+  const [currentUser, setCurrentUser] = useState("");
 
-  const {auth} = useContext(AuthContext);
-
-
-  // useEffect(() => {
-  //   const userLogInTemp = JSON.parse(localStorage.getItem("userLogIn"));
-  //   async function fetchUserName() {
-  //     const res = await axios.get(userLogInTemp.userId);
-  //     return res.data.username;
-  //   }
-  //   if (userLogInTemp) {
-  //     setUserLogIn(userLogInTemp);
-  //     fetchUserName().then(res => {
-  //       setUserName(res);
-  //     });
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const userResponse = await axios.get("/user");
+      setCurrentUser(userResponse.data.user);
+    }
+    fetchUserName().then();
+  }, []);
 
   return (
       <div>
-        <NavBar user={auth.user} ></NavBar>
-        <ProfileContainer ></ProfileContainer>
-        <PostContainer ></PostContainer>
+        <NavBar user={currentUser}></NavBar>
+        <ProfileContainer user={userName}></ProfileContainer>
+        <PostContainer user={userName}></PostContainer>
       </div>
   )
 }

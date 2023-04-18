@@ -38,6 +38,7 @@
 .username {
   font-size: 12px;
   font-weight: 600;
+  color: black !important;
 }
 
 .reply {
