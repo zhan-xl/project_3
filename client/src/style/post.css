@@ -4,8 +4,8 @@
   border-left: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
   border-right: 1px solid lightgray;
-
   padding: 12px;
+  position: relative;
 }
 
 .grid-container:first-child {
@@ -52,3 +52,11 @@
   padding-left: 12px;
 }
 
+.delete-btn {
+  float: right;
+}
+
+.update-btn {
+  float: right;
+  margin-right: 4px;
+}

@@ -19,7 +19,7 @@ export default function Home() {
   return (
       <div>
         <NavBar user={userName}></NavBar>
-        <PostContainer user={null}></PostContainer>
+        <PostContainer user={null} editable={false}></PostContainer>
       </div>
   )
 }

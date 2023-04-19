@@ -1,20 +1,18 @@
-const jwt = require('jsonwebtoken');
+const UserModel = require("../schema/User");
 require('dotenv').config();
 
-const verifyJWT = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) return res.sendStatus(401);
-  console.log(authHeader); // Bearer token
-  const token = authHeader.split(' ')[1];
-  jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET,
-      (err, decoded) => {
-        if (err) return res.sendStatus(403); //invalid token
-        req.user = decoded.username;
-        next();
-      }
-  );
+const verifyJWT = async (req, res, next) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) {
+    return res.sendStatus(204);
+  }
+  const refreshToken = cookies.jwt;
+  const foundUser = await UserModel.findOne({refreshToken});
+  if (!foundUser) {
+    res.clearCookie("jwt", {httpOnly: true, sameSite: "None", secure: true});
+    return res.sendStatus(204);
+  }
+  next(foundUser);
 }
 
 module.exports = verifyJWT

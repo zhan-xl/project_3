@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "../style/SignUp.css"
 
 const SIGN_UP_URL = "/signUp";
@@ -12,7 +12,6 @@ const SignUp = () => {
   const [perDescr, setPerDescr] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +29,7 @@ const SignUp = () => {
             withCredentials: true
           })
       setSuccess(true);
+      navigate("/"); // move navigate here will prevent the setState error message.
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -39,17 +39,11 @@ const SignUp = () => {
         setErrMsg("Registration Failed");
       }
     }
-
   }
 
   return (
-      <section className="container">
-        {success ? (
-            <h1 className="register-prompt">Success!
-              <p className="line">Sign In</p>
-            </h1>
-        ) : (
-            <section>
+      <div className="container">
+            <div>
               <div className="sign-up">Sign up</div>
               <p className={errMsg ? "err-msg" : "offscreen"}>{errMsg}</p>
               <form onSubmit={handleSubmit}>
@@ -85,17 +79,11 @@ const SignUp = () => {
                         disabled={!user || !pwd || !perDescr}>Submit
                 </button>
               </form>
-              <p className="register-prompt">
-                Already registered?
-                <span className="line">
-                  Sign in here
-                </span>
-              </p>
-
-            </section>
-
-        )}
-      </section>
+              <div className="register-prompt">
+                Already registered? <Link to='/log-in' className="line">Sign in here</Link>
+              </div>
+            </div>
+      </div>
   )
 }
 
