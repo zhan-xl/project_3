@@ -1,12 +1,17 @@
 const PostModel = require("../schema/Post");
 const UserModel = require("../schema/User");
 const express = require("express")
+const verifyJWT = require("../middleware/verifyJWT");
 const postRouter = express.Router();
 
 postRouter.post("/new-post", async (req, res) => {
   try {
-    const dbRes = await PostModel.create(req.body);
-    res.send(dbRes);
+    const postCont = req.body.postCont;
+    const postTime = new Date();
+    await verifyJWT(req, res, async (foundUser) => {
+      const dbRes = await PostModel.create({postCont, postTime, postedBy: foundUser.user});
+      res.send(dbRes);
+    });
   } catch (err) {
     res.send(err);
   }

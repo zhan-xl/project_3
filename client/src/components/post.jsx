@@ -4,8 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export default function Post(props) {
+
   const navigate = useNavigate();
-  const [loggedInUser, setUser] = useState('');
 
   async function updatePost() {
     navigate('/edit');
@@ -17,14 +17,14 @@ export default function Post(props) {
     console.log(response.data);
   }
 
-  async function isLoggedin() {
-    const response = await axios.get('/user');
-    setUser(response.data)
-  }
+  // async function isLoggedin() {
+  //   const response = await axios.get('/user');
+  //   setUser(response.data)
+  // }
 
-  useEffect(() => {
-    isLoggedin()
-  }, [])
+  // useEffect(() => {
+  //   isLoggedin()
+  // }, [])
 
   return (
       <div className="grid-container">
@@ -39,10 +39,10 @@ export default function Post(props) {
           </Link>
           <span className="date-and-time">{new Date(
               props.postTime).toLocaleString()}</span>
-          {loggedInUser!== '' ?
+          {props.editable ?
             <>
-              <span className="update-btn" onClick={updatePost}>Edit</span>
-              <span className="delete-btn" onClick={deletePost}>Delete</span>
+              <button className="delete-btn" onClick={deletePost}>Delete</button>
+              <button className="update-btn" onClick={updatePost}>Edit</button>
             </>
           : ''}
         </div>

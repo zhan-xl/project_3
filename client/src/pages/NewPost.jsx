@@ -16,14 +16,12 @@ export default function NewPost() {
         "post/new-post",
         JSON.stringify({
           postCont,
-          postTime: new Date(),
-          postedBy: auth.user,
         }),
         {
           headers: {"Content-Type": "application/json"},
           withCredentials: true
         });
-    navigate(-1); // going back to where I was.
+    navigate(-1); // going back to where I was. Good to learn this -XZ.
   }
 
   return (

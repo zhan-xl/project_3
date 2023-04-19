@@ -26,4 +26,17 @@ userRouter.get("/all", async (req, res) => {
   res.send(resUsers);
 })
 
+userRouter.get("/search/:string", async (req, res) => {
+  const string = req.params.string.toLowerCase();
+  const allUsers = await UserModel.find();
+  let foundUsers = [];
+  for (let user of allUsers) {
+    const username = user.user.toLowerCase();
+    if (username.includes(string)) {
+      foundUsers.push(user.user);
+    }
+  }
+  res.send(foundUsers);
+})
+
 module.exports = userRouter;

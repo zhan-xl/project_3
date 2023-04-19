@@ -34,6 +34,7 @@ export default function PostContainer(props) {
                 user={post.postedBy}
                 postCont={post.postCont}
                 postTime={post.postTime}
+                editable={props.editable}
             />))}
       </ul>
   )
