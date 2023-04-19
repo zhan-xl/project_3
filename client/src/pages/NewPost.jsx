@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import "../style/NewPost.css"
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../context/AuthProvider";
 
@@ -10,8 +10,6 @@ export default function NewPost() {
 
   const [postCont, setPostCont] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   async function post() {
     await axios.post(
@@ -25,7 +23,7 @@ export default function NewPost() {
           headers: {"Content-Type": "application/json"},
           withCredentials: true
         });
-    navigate(from, {replace: true});
+    navigate(-1); // going back to where I was.
   }
 
   return (
