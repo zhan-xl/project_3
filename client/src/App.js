@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import NewPost from "./pages/NewPost";
 import LogOut from "./pages/LogOut";
 import Edit from "./pages/Edit";
+import Search from "./pages/Search";
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/new-post" element={<NewPost />} />
         <Route path='/profile' element={<Profile />} />
         <Route path="/log-out" element={<LogOut />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
   );
 }

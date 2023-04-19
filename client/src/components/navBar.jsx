@@ -24,7 +24,7 @@ export default function NavBar(props) {
               </Link>
             </div>
             <div className="navbar-username">
-              <Link to={"/profile"} state={{userName: props.user}}>
+              <Link to={"/profile"} state={{userName: props.user}} onClick={() => window.location.reload()}>
                 {props.user}
                 <span className="triangle"> &#9660;</span>
               </Link>
@@ -53,7 +53,7 @@ export default function NavBar(props) {
       <div className='navbar-frame'>
         <div className="navbar-box-left">
           <div className="navbar-button"><Link to={"/"}>Home</Link></div>
-          <SearchBar/>
+          <div className="navbar-button"><Link to={"/search"}>Search</Link></div>
         </div>
         {isLoggedIn()}
       </div>

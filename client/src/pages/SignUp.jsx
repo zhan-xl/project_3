@@ -29,6 +29,7 @@ const SignUp = () => {
             withCredentials: true
           })
       setSuccess(true);
+      navigate("/"); // move navigate here will prevent the setState error message.
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -42,7 +43,6 @@ const SignUp = () => {
 
   return (
       <div className="container">
-        {success ? navigate('/log-in') :
             <div>
               <div className="sign-up">Sign up</div>
               <p className={errMsg ? "err-msg" : "offscreen"}>{errMsg}</p>
@@ -82,7 +82,7 @@ const SignUp = () => {
               <div className="register-prompt">
                 Already registered? <Link to='/log-in' className="line">Sign in here</Link>
               </div>
-            </div>}
+            </div>
       </div>
   )
 }
