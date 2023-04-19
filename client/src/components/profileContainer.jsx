@@ -3,7 +3,7 @@ import "../style/profileContainer.css"
 import "../style/post.css"
 import axios from "axios";
 
-// props = username
+// props.user = username
 export default function ProfileContainer(props) {
 
   const [user, setUser] = useState([]);

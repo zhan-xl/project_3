@@ -1,4 +1,5 @@
 const PostModel = require("../schema/Post");
+const UserModel = require("../schema/User");
 const express = require("express")
 const postRouter = express.Router();
 
@@ -11,6 +12,7 @@ postRouter.post("/new-post", async (req, res) => {
   }
 })
 
+//getting all posts
 postRouter.get("/", async (req, res) => {
   try {
     const dbResponse = await PostModel.find({});
@@ -29,11 +31,41 @@ postRouter.get("/:userName", async (req, res) => {
     res.send(err);
   }
 })
-//
-// app.get("/posts/:userId", (req, res) => {
-//   PostModel.findPostByUserId(req.params.userId).then(dbResponse => {
-//     res.send(dbResponse);
-//   })
-// })
+
+postRouter.delete('/:postId', async function (req, res) {
+  const cookies = req.cookies;
+  
+  if (cookies.jwt){
+    const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
+    
+    const post = await PostModel.findById(req.params.postId);
+    //if the post username matches the req.username (get from jwt)
+    if (post.postedBy == foundUser.user) {
+      await post.deleteOne();
+      res.status(200).send('post has been deleted');
+    }
+    else {
+      res.status(500).send('post not deleted')
+    }
+  }
+})
+
+postRouter.put('/:postId', async function (req, res) {
+  const cookies = req.cookies;
+  
+  // if (cookies.jwt){
+  //   const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
+    
+  //   const post = await PostModel.findById(req.params.postId);
+  //   //if the post username matches the req.username (get from jwt)
+  //   if (post.postedBy == foundUser.user) {
+  //     await post.deleteOne();
+  //     res.status(200).send('post has been deleted');
+  //   }
+  //   else {
+  //     res.status(500).send('post not deleted')
+  //   }
+  // }
+})
 
 module.exports = postRouter;
