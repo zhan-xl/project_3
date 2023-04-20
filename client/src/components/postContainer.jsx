@@ -5,12 +5,13 @@ import axios from "axios";
 
 export default function PostContainer(props) {
 
+  const {user, editable} = props;
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      if (props.user) {
-        const postRes = await axios.get("/post/" + props.user);
+      if (user) {
+        const postRes = await axios.get("/post/" + user);
         postRes.data.sort((a, b) => {
           return a.postTime < b.postTime ? 1 : -1;
         })
@@ -24,7 +25,7 @@ export default function PostContainer(props) {
       }
     }
     fetchPosts();
-  }, []);
+  }, [user]);
 
   return (
       <ul className="grid">
@@ -34,8 +35,8 @@ export default function PostContainer(props) {
                 user={post.postedBy}
                 postCont={post.postCont}
                 postTime={post.postTime}
-                editable={props.editable}
-                post_id = {post._id}
+                editable={editable}
+                post_id={post._id}
             />))}
       </ul>
   )
