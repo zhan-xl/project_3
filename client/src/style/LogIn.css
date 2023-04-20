@@ -19,6 +19,7 @@
 
 .log-in-button {
   font-weight: normal;
+  display: block;
   color: #F4F4F4;
   background-color: #424242;
   font-size: 20px;
