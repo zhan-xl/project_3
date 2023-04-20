@@ -7,21 +7,19 @@ import {useLocation} from "react-router-dom";
 
 export default function Profile() {
   const location = useLocation();
-  const [userName, setUserName] = useState("");
+  const userName = location.state.userName;
   const [editable, setEditable] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
-    if (location.state) {
-      setUserName(location.state.userName);
-    }
-    const fetchUserName = async () => {
+    const fetchCurrentUser = async () => {
       const userResponse = await axios.get("/user");
       setCurrentUser(userResponse.data.user);
       setEditable(userName === userResponse.data.user);
     }
-    fetchUserName();
-  }, []);
+    fetchCurrentUser();
+    console.log(userName);
+  }, [userName]);
 
   return (
       <div>

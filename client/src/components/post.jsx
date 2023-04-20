@@ -26,11 +26,14 @@ export default function Post(props) {
         </div>
         <div>
           <Link to={"/profile"}
+                onClick={() => window.location.reload()}
                 state={{userName: props.user}}
-                className="username">{props.user}
+                className="username">
+            {props.user}
           </Link>
           <span className="date-and-time">{new Date(
-              props.postTime).toLocaleString()}</span>
+              props.postTime).toLocaleString()}
+          </span>
           {props.editable ?
             <>
               <button className="delete-btn" onClick={deletePost}>Delete</button>
@@ -38,7 +41,6 @@ export default function Post(props) {
             </>
           : ''}
         </div>
-
         <div className="content">{props.postCont}</div>
       </div>
   )
