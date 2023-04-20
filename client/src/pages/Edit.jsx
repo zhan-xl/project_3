@@ -1,16 +1,27 @@
-import React, {useState } from "react";
+import React, {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import "../style/NewPost.css"
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export default function Edit() {
     const [postContent, setPostContent] = useState("");
+
+    const location = useLocation();
+    const {id} = location.state;
     const navigate = useNavigate();
 
     //updating a post by its postid
     async function postUpdate() {
-        const response = await axios.put('/post/') // + postid
-        
+        if (id) {
+            await axios.put('/post/' + id, JSON.stringify({
+                postContent,
+              }),
+              {
+                headers: {"Content-Type": "application/json"},
+                withCredentials: true
+              });
+              navigate(-1);
+        }
     }
 
     return (

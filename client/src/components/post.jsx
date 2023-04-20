@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../style/post.css"
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export default function Post(props) {
-
   const navigate = useNavigate();
 
   async function updatePost() {
-    navigate('/edit');
+    navigate('/edit', {replace: true, state: {id: props.post_id}});
   }
 
   async function deletePost() {
-    // delete post by postid ---- need to change this hardcoded post id 
-    const response = await axios.delete('/post/643dd086c7d0c1aa6b333855')
-    console.log(response.data);
+    // delete post by postid ---- need to change this hardcoded post id
+    if (props.post_id) { // if statement is needed or gets 500 error
+      await axios.delete('/post/' + props.post_id);
+      window.location.reload();
+    }
   }
-
-  // async function isLoggedin() {
-  //   const response = await axios.get('/user');
-  //   setUser(response.data)
-  // }
-
-  // useEffect(() => {
-  //   isLoggedin()
-  // }, [])
 
   return (
       <div className="grid-container">

@@ -1,12 +1,12 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import "../style/NewPost.css"
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import AuthContext from "../context/AuthProvider";
+//import AuthContext from "../context/AuthProvider";
 
 export default function NewPost() {
 
-  const {auth} = useContext(AuthContext);
+  //const {auth} = useContext(AuthContext);
 
   const [postCont, setPostCont] = useState("");
   const navigate = useNavigate();
