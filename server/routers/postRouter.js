@@ -3,6 +3,7 @@ const UserModel = require("../schema/User");
 const express = require("express")
 const verifyJWT = require("../middleware/verifyJWT");
 const postRouter = express.Router();
+const mongoose = require("mongoose");
 
 postRouter.post("/new-post", async (req, res) => {
   try {
@@ -58,19 +59,20 @@ postRouter.delete('/:postId', async function (req, res) {
 postRouter.put('/:postId', async function (req, res) {
   const cookies = req.cookies;
   
-  // if (cookies.jwt){
-  //   const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
-    
-  //   const post = await PostModel.findById(req.params.postId);
-  //   //if the post username matches the req.username (get from jwt)
-  //   if (post.postedBy == foundUser.user) {
-  //     await post.deleteOne();
-  //     res.status(200).send('post has been deleted');
-  //   }
-  //   else {
-  //     res.status(500).send('post not deleted')
-  //   }
-  // }
+  if (cookies.jwt){
+    const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
+    const post = await PostModel.findById(req.params.postId);
+    //if the post username matches the req.username (get from jwt)
+    if (post.postedBy == foundUser.user) {
+      await PostModel.findOneAndUpdate({_id: new mongoose.Types.ObjectId(req.params.postId)}, 
+                                       {$set: {postCont: req.body.postContent,
+                                      postTime: new Date()}}, {new: true});
+      res.status(200).send('post has been updated');
+    }
+    else {
+      res.status(500).send('post update failed');
+     }
+  }
 })
 
 module.exports = postRouter;

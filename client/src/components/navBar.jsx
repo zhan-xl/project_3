@@ -7,6 +7,7 @@ import SearchBar from "./searchBar";
 
 export default function NavBar(props) {
   const navigate = useNavigate();
+
   const handleLogOut = async () => {
     console.log("this is the log out function");
     await axios.put("/logOut", (req, res) => {
@@ -24,7 +25,8 @@ export default function NavBar(props) {
               </Link>
             </div>
             <div className="navbar-username">
-              <Link to={"/profile"} state={{userName: props.user}} onClick={() => window.location.reload()}>
+              {/* onClick={() => window.location.reload()} */}
+              <Link to={"/profile"} state={{userName: props.user}}> 
                 {props.user}
                 <span className="triangle"> &#9660;</span>
               </Link>

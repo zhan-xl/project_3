@@ -1,8 +1,7 @@
 import NavBar from "../components/navBar";
 import PostContainer from "../components/postContainer";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import AuthContext from "../context/AuthProvider";
 
 export default function Home() {
 

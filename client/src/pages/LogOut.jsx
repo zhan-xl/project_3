@@ -4,11 +4,11 @@ import {useNavigate} from "react-router-dom";
 
 const LogOut  = () => {
 
-  const {setAuth} = useContext(AuthContext);
+  //const {setAuth} = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAuth("");
+    //setAuth("");
     setTimeout(() => {
       navigate("/");
     }, 1000)

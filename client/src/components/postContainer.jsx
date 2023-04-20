@@ -35,6 +35,7 @@ export default function PostContainer(props) {
                 postCont={post.postCont}
                 postTime={post.postTime}
                 editable={props.editable}
+                post_id = {post._id}
             />))}
       </ul>
   )
