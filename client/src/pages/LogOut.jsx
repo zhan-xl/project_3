@@ -1,5 +1,4 @@
-import React, {useContext, useEffect} from "react";
-import AuthContext from "../context/AuthProvider";
+import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 const LogOut  = () => {
@@ -10,7 +9,7 @@ const LogOut  = () => {
     setTimeout(() => {
       navigate("/");
     }, 1000)
-  }, []);
+  });
 
   return (
       <section>

@@ -25,9 +25,7 @@ export default function Post(props) {
                src={require("../img/charlie-avatar.png")} alt=""/>
         </div>
         <div>
-          <Link to={"/profile"}
-                onClick={() => window.location.reload()}
-                state={{userName: props.user}}
+          <Link to={"/profile/" + props.user}
                 className="username">
             {props.user}
           </Link>

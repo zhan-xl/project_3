@@ -3,11 +3,11 @@ import "../style/navBar.css"
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import SearchBar from "./searchBar";
 
 export default function NavBar(props) {
 
   const navigate = useNavigate();
+  const {logInUserName} = props;
 
   const handleLogOut = async () => {
     console.log("this is the log out function");
@@ -17,7 +17,7 @@ export default function NavBar(props) {
   }
 
   function isLoggedIn() {
-    if (props.user) {
+    if (logInUserName) {
       return (
           <div className="navbar-box-right">
             <div className="navbar-button">
@@ -26,9 +26,8 @@ export default function NavBar(props) {
               </Link>
             </div>
             <div className="navbar-username">
-              {/* onClick={() => window.location.reload()} */}
-              <Link to={"/profile"} state={{userName: props.user}}> 
-                {props.user}
+              <Link to={"/profile/" + logInUserName} >
+                {logInUserName}
                 <span className="triangle"> &#9660;</span>
               </Link>
             </div>
