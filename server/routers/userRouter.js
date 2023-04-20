@@ -5,7 +5,7 @@ const UserModel = require("../schema/User");
 userRouter.get("/", async (req, res) => {
   const cookie = req.cookies;
   if (!cookie?.jwt) {
-    return res.send("");
+    return res.sendStatus(422); //user in not in the system
   }
   const foundUser = await UserModel.findOne({refreshToken: cookie.jwt});
   res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
