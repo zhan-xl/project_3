@@ -3,20 +3,20 @@ import "../style/profileContainer.css"
 import "../style/post.css"
 import axios from "axios";
 
-// props.user = username
 export default function ProfileContainer(props) {
-  const userName = props.user;
+
+  const visitUserName = props.visitUserName;
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (userName) {
-        const userResponse = await axios.get("/user/findByName/" + userName);
+      if (visitUserName) {
+        const userResponse = await axios.get("/user/findByName/" + visitUserName);
         setUser(userResponse.data); //join time, description, username
       }
     }
-    fetchUser();
-  }, [userName]);
+    fetchUser().then();
+  }, [visitUserName]);
 
   return (
       <div className="profile-container">

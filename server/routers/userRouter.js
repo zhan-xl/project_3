@@ -14,7 +14,12 @@ userRouter.get("/", async (req, res) => {
 userRouter.get("/findByName/:userName", async (req, res) => {
   const userName = req.params.userName;
   const foundUser = await UserModel.findOne({user: userName});
-  res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
+  if (foundUser) {
+    res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
+  } else {
+    res.sendStatus(422); // user is not in the database
+  }
+
 })
 
 userRouter.get("/all", async (req, res) => {
