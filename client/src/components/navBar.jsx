@@ -6,7 +6,9 @@ import {useNavigate} from "react-router-dom";
 import SearchBar from "./searchBar";
 
 export default function NavBar(props) {
+
   const navigate = useNavigate();
+
   const handleLogOut = async () => {
     console.log("this is the log out function");
     await axios.put("/logOut", (req, res) => {
