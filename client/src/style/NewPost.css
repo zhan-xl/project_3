@@ -20,7 +20,7 @@
   padding: 8px 16px;
   border-radius: 4px;
   text-align: center;
-  width: 72px;
+  width: fit-content;
   justify-self: end;
   box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
 }

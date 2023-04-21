@@ -27,7 +27,7 @@ export default function Profile() {
   return (
       <div>
         <NavBar logInUserName={logInUserName}></NavBar>
-        <ProfileContainer visitUserName={visitUserName}></ProfileContainer>
+        <ProfileContainer visitUserName={visitUserName} editable={editable}></ProfileContainer>
         <PostContainer visitUserName={visitUserName} editable={editable}></PostContainer>
       </div>
   )
