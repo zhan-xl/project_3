@@ -5,7 +5,7 @@ const UserModel = require("../schema/User");
 userRouter.get("/", async (req, res) => {
   const cookie = req.cookies;
   if (!cookie?.jwt) {
-    return res.sendStatus(422); //user in not in the system
+    return res.send('') // when logging out, if we send 422 errorcode, we get error in console
   }
   const foundUser = await UserModel.findOne({refreshToken: cookie.jwt});
   res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
@@ -17,7 +17,7 @@ userRouter.get("/findByName/:userName", async (req, res) => {
   if (foundUser) {
     res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
   } else {
-    res.sendStatus(422); // user is not in the database
+    res.send('');
   }
 
 })
@@ -42,6 +42,25 @@ userRouter.get("/search/:string", async (req, res) => {
     }
   }
   res.send(foundUsers);
+})
+
+userRouter.put("/updateProfileDescription/:username", async (req, res) => {
+  const cookies = req.cookies;
+  if (cookies.jwt) {
+    profile_username = req.params.username
+    
+    const loggedin = await UserModel.findOne({refreshToken: cookies.jwt});
+    // this user is the account holder
+    if (loggedin.user == profile_username) {
+      await UserModel.findOneAndUpdate({user: profile_username}, 
+                                       {$set: {perDescr: req.body.postCont
+                                      }}, {new: true});
+      res.status(200).send('description has been updated');                            
+    }
+    else {
+      res.status(500).send('not allowed');
+    }
+  }
 })
 
 module.exports = userRouter;

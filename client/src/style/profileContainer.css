@@ -34,4 +34,11 @@
 .description {
   grid-column: span 2;
   margin-bottom: 12px;
+  position: relative;
+}
+
+.edit-icon {
+  position: absolute;
+  margin-left: 1rem;
+  float: right;
 }

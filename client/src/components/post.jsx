@@ -11,7 +11,6 @@ export default function Post(props) {
   }
 
   async function deletePost() {
-    // delete post by postid ---- need to change this hardcoded post id
     if (props.post_id) { // if statement is needed or gets 500 error
       await axios.delete('/post/' + props.post_id);
       window.location.reload();
