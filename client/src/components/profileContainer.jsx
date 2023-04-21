@@ -33,12 +33,19 @@ export default function ProfileContainer(props) {
     const uploadTask = uploadBytesResumable(imagePath, image);
    
     // Upload completed successfully, now we can get the download URL
-    getDownloadURL((await uploadTask).ref).then((downloadURL) => {
-      // make api call find the logged in user, post the url in mongodb
-      // get the url from mongodb for the user
-      // setImgURL();  set it to the retunred url so it stays there.
+    getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
+      // make api call find the logged in user, put the url in mongodb
+      if (visitUserName){
+         const res = await axios.put('/user/pictureUpload/' + visitUserName, {url: downloadURL});
+         setImgURL(res.data.profilePictureURL);
+      }
     });
   }
+
+  // this part is not working
+  // useEffect(() => {
+  //   image && uploadImage();
+  // }, [image])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -57,6 +64,7 @@ export default function ProfileContainer(props) {
     fetchUser().then();
   }, [visitUserName]);
 
+
   return notFound ? (
     <div>User does not exist</div>
   ) : (
@@ -71,9 +79,10 @@ export default function ProfileContainer(props) {
         <input type="file" onChange={e => setImage(e.target.files[0])}
           accept="image/*" >
         </input> 
-      <button className='profile-picture-btn' onClick={uploadImage}>Upload image</button>
+      {/* <button className='profile-picture-btn' onClick={uploadImage}>Upload image</button> */}
        </>
       : ''}
+      <br></br>
       <div className="profile-username">{user.user}</div>
       <div className="profile-join-time">
         Joined on: {new Date(user.joinTime).toLocaleString().split(',')[0]}

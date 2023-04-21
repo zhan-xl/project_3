@@ -1,6 +1,8 @@
 const express = require('express');
 const userRouter = express.Router();
 const UserModel = require("../schema/User");
+//const mongoose = require('mongoose');
+//mongoose.model('users').schema.add({profilePicture: String})
 
 userRouter.get("/", async (req, res) => {
   const cookie = req.cookies;
@@ -61,6 +63,27 @@ userRouter.put("/updateProfileDescription/:username", async (req, res) => {
       res.status(500).send('not allowed');
     }
   }
+})
+
+userRouter.put('/pictureUpload/:username', async (req, res) => {
+  const cookies = req.cookies;
+  if (cookies.jwt) {
+    profile_username = req.params.username;
+  }
+  const loggedin = await UserModel.findOne({refreshToken: cookies.jwt});
+    // this user is the account holder
+    if (loggedin.user == profile_username) {
+      // setting new field with profilePictureURL: picture url received from firebase
+      const updated = await UserModel.findOneAndUpdate({user: profile_username}, 
+                                       {$set: {profilePictureURL: req.body.url
+                                      }}, {returnNewDocument: true,
+                                        new: true,
+                                        strict: false});
+      res.send(updated);                            
+    }
+    else {
+      res.status(500).send('not allowed');
+    }
 })
 
 module.exports = userRouter;
