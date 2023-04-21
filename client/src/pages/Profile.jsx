@@ -18,7 +18,6 @@ export default function Profile() {
         setLogInUserName(userResponse.data.user);
         setEditable(visitUserName === userResponse.data.user);
       } catch (err) {
-        console.log(err);
       }
     }
     fetchLogInUserName().then();

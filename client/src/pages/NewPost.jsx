@@ -12,7 +12,7 @@ export default function NewPost() {
   const navigate = useNavigate();
 
   async function post() {
-    await axios.post(
+    const a = await axios.post(
         "post/new-post",
         JSON.stringify({
           postCont,
@@ -21,6 +21,7 @@ export default function NewPost() {
           headers: {"Content-Type": "application/json"},
           withCredentials: true
         });
+    console.log(a)
     navigate(-1); // going back to where I was. Good to learn this -XZ.
   }
 

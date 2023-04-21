@@ -10,6 +10,6 @@ const userSchema = new mongoose.Schema({
     ref:"posts",
   },
   refreshToken: String,
-}, {collection: "users"})
+}, {collection: "users"}, { strict: false })
 
 module.exports = mongoose.model("User", userSchema);

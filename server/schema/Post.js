@@ -4,6 +4,6 @@ const postSchema = new mongoose.Schema({
   postCont: String,
   postTime: Date,
   postedBy: String,
-}, {collection: "posts"})
+}, {collection: "posts"}, { strict: false })
 
 module.exports = mongoose.model("Post", postSchema);

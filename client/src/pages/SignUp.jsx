@@ -29,7 +29,7 @@ const SignUp = () => {
             withCredentials: true
           })
       setSuccess(true);
-      navigate("/"); // move navigate here will prevent the setState error message.
+      navigate("/");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
