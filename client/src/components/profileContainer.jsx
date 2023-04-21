@@ -3,6 +3,10 @@ import EditDescription from './EditDescription';
 import '../style/profileContainer.css';
 import '../style/post.css';
 import axios from 'axios';
+import app from '../firebase';
+// image upload code ref from firebase doc (full example):
+// https://firebase.google.com/docs/storage/web/upload-files
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function ProfileContainer(props) {
   const visitUserName = props.visitUserName;
@@ -11,8 +15,14 @@ export default function ProfileContainer(props) {
   const [notFound, setNotFound] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [image, setImage] = useState(null);
+
   function editDescription() {
     setOpen(true);
+  }
+
+  function uploadImage() {
+    const storage = getStorage(app);
   }
 
   useEffect(() => {
@@ -45,6 +55,13 @@ export default function ProfileContainer(props) {
         src={require('../img/charlie-avatar.png')}
         alt=""
       ></img>
+
+      {/* at 0th index it has the actual file we want */}
+      <input type="file" onChange={e => setImage(e.target.files[0])}
+      // accepting all image type
+        accept="image/*" className='hide-no-file-chosen-msg'></input>
+      <button className='profile-picture-btn'>Upload picture</button>
+      <br></br>
       <div className="profile-username">{user.user}</div>
       <div className="profile-join-time">
         Joined on: {new Date(user.joinTime).toLocaleString().split(',')[0]}
