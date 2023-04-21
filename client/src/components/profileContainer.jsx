@@ -4,8 +4,8 @@ import '../style/profileContainer.css';
 import '../style/post.css';
 import axios from 'axios';
 import app from '../firebase';
-// image upload code ref from firebase doc (full example):
-// https://firebase.google.com/docs/storage/web/upload-files
+import { v4 as uuid } from 'uuid';
+
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function ProfileContainer(props) {
@@ -14,6 +14,7 @@ export default function ProfileContainer(props) {
   const [user, setUser] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [open, setOpen] = useState(false);
+  const [imgURL, setImgURL] = useState(null);
 
   const [image, setImage] = useState(null);
 
@@ -21,8 +22,22 @@ export default function ProfileContainer(props) {
     setOpen(true);
   }
 
-  function uploadImage() {
+  async function uploadImage() {
     const storage = getStorage(app);
+    if (image == null) {
+      return;
+    }
+    // uuid to make each file in images folder have a unique name
+    const imagePath = ref(storage, `/images/${image.name + uuid()}`);
+    // uploading
+    const uploadTask = uploadBytesResumable(imagePath, image);
+   
+    // Upload completed successfully, now we can get the download URL
+    getDownloadURL((await uploadTask).ref).then((downloadURL) => {
+      // make api call find the logged in user, post the url in mongodb
+      // get the url from mongodb for the user
+      // setImgURL();  set it to the retunred url so it stays there.
+    });
   }
 
   useEffect(() => {
@@ -36,11 +51,7 @@ export default function ProfileContainer(props) {
             setNotFound(true);
           }
           setUser(userResponse.data);
-        } catch (err) {
-          // if (err.response.status === 422) {
-          //   setNotFound(true);
-          // }
-        }
+        } catch (err) {}
       }
     };
     fetchUser().then();
@@ -52,16 +63,17 @@ export default function ProfileContainer(props) {
     <div className="profile-container">
       <img
         className="profile-avatar"
-        src={require('../img/charlie-avatar.png')}
+        src= {imgURL}
         alt=""
       ></img>
-
-      {/* at 0th index it has the actual file we want */}
-      <input type="file" onChange={e => setImage(e.target.files[0])}
-      // accepting all image type
-        accept="image/*" className='hide-no-file-chosen-msg'></input>
-      <button className='profile-picture-btn'>Upload picture</button>
-      <br></br>
+       {props.editable ? 
+      <>
+        <input type="file" onChange={e => setImage(e.target.files[0])}
+          accept="image/*" >
+        </input> 
+      <button className='profile-picture-btn' onClick={uploadImage}>Upload image</button>
+       </>
+      : ''}
       <div className="profile-username">{user.user}</div>
       <div className="profile-join-time">
         Joined on: {new Date(user.joinTime).toLocaleString().split(',')[0]}
