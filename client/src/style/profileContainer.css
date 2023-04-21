@@ -42,3 +42,18 @@
   margin-left: 1rem;
   float: right;
 }
+
+.hide-no-file-chosen-msg {
+  display: none;
+}
+
+.profile-picture-btn {
+  width:fit-content;
+  height:fit-content;
+  background-color: #EFEFEF;
+  border: 1px solid buttonborder;
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 13.3px;
+  font-family: Arial;
+}
