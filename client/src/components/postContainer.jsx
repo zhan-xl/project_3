@@ -37,6 +37,7 @@ export default function PostContainer(props) {
                 postTime={post.postTime}
                 editable={editable}
                 post_id={post._id}
+                img = {post.downloadURL}
             />))}
       </ul>
   )

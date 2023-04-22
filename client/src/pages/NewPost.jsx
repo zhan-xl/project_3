@@ -13,35 +13,40 @@ export default function NewPost() {
   const [image, setImage] = useState(null);
 
   async function post() {
-    const storage = getStorage(app);
     if (image == null) {
-      return;
-    }
+    try {
+        await axios.post(
+    "/post/new-post",
+    {postCont},
+    {
+      headers: {"Content-Type": "application/json"},
+      withCredentials: true
+    });
+  } catch (err) {}
+  }
+  else {
     // uuid to make each file in images folder have a unique name
+    const storage = getStorage(app);
     const imagePath = ref(storage, `/images/${image.name + uuid()}`);
-    
     // uploading
     const uploadTask = uploadBytesResumable(imagePath, image);
-    console.log("here");
     getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
-      console.log("here2");
-      //console.log(JSON.stringify(downloadURL))
       try {
-              const res = await axios.post(
-        "post/new-post",
+            await axios.post(
+        "/post/new-post",
         {
           postCont, 
-          // imagePath: imagePath.fullPath, 
-          // url: JSON.stringify(downloadURL),
+          imagePath: imagePath.fullPath, 
+          url: JSON.stringify(downloadURL),
         },
         {
           headers: {"Content-Type": "application/json"},
           withCredentials: true
         });
       } catch (err) {
-        console.log(err);
       }
     });
+  }
     navigate(-1); // going back to where I was. Good to learn this -XZ.
   }
 
@@ -57,7 +62,6 @@ export default function NewPost() {
         </input> 
         <div className="post-button" onClick={() => {
                   post();
-                  //uploadImage();
                 }}>
           Post
         </div>
