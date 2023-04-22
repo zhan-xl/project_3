@@ -8,15 +8,35 @@ const mongoose = require("mongoose");
 postRouter.post("/new-post", async (req, res) => {
   try {
     const postCont = req.body.postCont;
+    const imagePath = req.body.imagePath;
+    const downloadURL = req.body.url;
     const postTime = new Date();
     await verifyJWT(req, res, async (foundUser) => {
-      const dbRes = await PostModel.create({postCont, postTime, postedBy: foundUser.user});
+      const dbRes = await PostModel.create({postCont, postTime, postedBy: foundUser.user, imagePath, downloadURL});
       res.send(dbRes);
     });
   } catch (err) {
     res.send(err);
   }
 })
+
+// postRouter.put("/postImgUpload/:postId", async (req, res) => {
+//   cookies = req.cookies;
+//   if (cookies) {
+//     const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
+//     res.send(foundUser)
+//     const post = await PostModel.findById(req.params.postId);
+//     // if (post.postedBy == foundUser.user) {
+//     //   await PostModel.findOneAndUpdate({_id: new mongoose.Types.ObjectId(req.params.postId)}, 
+//     //                                    {$set: {imagePath: req.body.imagePath,}},
+//     //                                    {new: true});
+//     // res.status(200).send('img path added');
+//     // } else {
+//     //   res.status(500).send('img path not added');
+//     // }
+
+//   }
+// })
 
 //getting all posts
 postRouter.get("/", async (req, res) => {
