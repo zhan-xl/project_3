@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import EditDescription from './EditDescription';
 import '../style/profileContainer.css';
@@ -12,7 +13,7 @@ export default function ProfileContainer(props) {
   const visitUserName = props.visitUserName;
 
   const [user, setUser] = useState([]);
-  const [notFound, setNotFound] = useState(false);
+  //const [notFound, setNotFound] = useState(false);
   const [open, setOpen] = useState(false);
   const [imgURL, setImgURL] = useState(null);
 
@@ -36,16 +37,17 @@ export default function ProfileContainer(props) {
     getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
       // make api call find the logged in user, put the url in mongodb
       if (visitUserName){
-         const res = await axios.put('/user/pictureUpload/' + visitUserName, {url: downloadURL});
-         setImgURL(res.data.profilePictureURL);
+         await axios.put('/user/pictureUpload/' + visitUserName, {url: downloadURL});
       }
     });
   }
-
-  // this part is not working
-  // useEffect(() => {
-  //   image && uploadImage();
-  // }, [image])
+  async function getURL() {
+    const response = await axios.get('/user/pictureUpload/' + visitUserName);
+    setImgURL(response.data.profilePictureURL)
+  }
+  useEffect(() => {
+    getURL();
+  }, [image])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,7 +57,7 @@ export default function ProfileContainer(props) {
             '/user/findByName/' + visitUserName
           );
           if (userResponse.data.user === undefined) {
-            setNotFound(true);
+            //setNotFound(true); // maybe make an api call to delete not existing user's post
           }
           setUser(userResponse.data);
         } catch (err) {}
@@ -64,10 +66,11 @@ export default function ProfileContainer(props) {
     fetchUser().then();
   }, [visitUserName]);
 
+  // if (notFound) {
+  //   return (<div>User does not exist</div>);
+  // }
 
-  return notFound ? (
-    <div>User does not exist</div>
-  ) : (
+  return (
     <div className="profile-container">
       <img
         className="profile-avatar"
@@ -79,10 +82,9 @@ export default function ProfileContainer(props) {
         <input type="file" onChange={e => setImage(e.target.files[0])}
           accept="image/*" >
         </input> 
-      {/* <button className='profile-picture-btn' onClick={uploadImage}>Upload image</button> */}
+      <button className='profile-picture-btn' onClick={uploadImage}>Upload image</button>
        </>
       : ''}
-      <br></br>
       <div className="profile-username">{user.user}</div>
       <div className="profile-join-time">
         Joined on: {new Date(user.joinTime).toLocaleString().split(',')[0]}

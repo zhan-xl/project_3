@@ -69,8 +69,7 @@ userRouter.put('/pictureUpload/:username', async (req, res) => {
   const cookies = req.cookies;
   if (cookies.jwt) {
     profile_username = req.params.username;
-  }
-  const loggedin = await UserModel.findOne({refreshToken: cookies.jwt});
+    const loggedin = await UserModel.findOne({refreshToken: cookies.jwt});
     // this user is the account holder
     if (loggedin.user == profile_username) {
       // setting new field with profilePictureURL: picture url received from firebase
@@ -79,11 +78,18 @@ userRouter.put('/pictureUpload/:username', async (req, res) => {
                                       }}, {returnNewDocument: true,
                                         new: true,
                                         strict: false});
-      res.send(updated);                            
+      res.send('profile has been uploaded successfully');                            
     }
     else {
       res.status(500).send('not allowed');
     }
+  }
+})
+
+userRouter.get('/pictureUpload/:username', async (req, res) => {
+  profile_username = req.params.username;
+  const user = await UserModel.findOne({user: profile_username});
+  res.send(user);
 })
 
 module.exports = userRouter;

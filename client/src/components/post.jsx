@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "../style/post.css"
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export default function Post(props) {
   const navigate = useNavigate();
+  const [imgURL, setImgURL] = useState(null);
 
   async function updatePost() {
     navigate('/edit', {replace: true, state: {id: props.post_id}});
@@ -16,12 +17,22 @@ export default function Post(props) {
       window.location.reload();
     }
   }
+  
+  async function profilePicture() {
+    if (props.user) {
+      const response = await axios.get('/user/pictureUpload/' + props.user);
+      setImgURL(response.data.profilePictureURL)
+    }
+  }
+  useEffect(() => {
+    profilePicture();
+  }, [])
 
   return (
       <div className="grid-container">
         <div className="post-avatar-div">
           <img className="post-avatar"
-               src={require("../img/charlie-avatar.png")} alt=""/>
+               src={imgURL} alt=""/>
         </div>
         <div>
           <Link to={"/profile/" + props.user}

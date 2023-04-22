@@ -15,11 +15,14 @@
 
 .profile-avatar {
   margin-top: 24px;
-  width: auto;
-  height: 84px;
-  border: 3px solid white;
-  border-radius: 42px;
+  width:90px;
+  height: 100px;
+  border: 1px solid gray;
+  border-radius: 50%;
   grid-column: span 2;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 .profile-username {
@@ -56,4 +59,10 @@
   padding: 3px;
   font-size: 13.3px;
   font-family: Arial;
+}
+
+.not-existing-user {
+  font-family: Arial;
+  font-size: 2rem;
+  text-align: center;
 }
