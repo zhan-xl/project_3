@@ -13,7 +13,7 @@ export default function ProfileContainer(props) {
   const visitUserName = props.visitUserName;
 
   const [user, setUser] = useState([]);
-  //const [notFound, setNotFound] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [open, setOpen] = useState(false);
   const [imgURL, setImgURL] = useState(null);
 
@@ -47,7 +47,7 @@ export default function ProfileContainer(props) {
   }
   useEffect(() => {
     getURL();
-  }, [image])
+  }, [image, visitUserName])
 
   useEffect(() => {
     const fetchUser = async () => {

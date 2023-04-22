@@ -9,7 +9,7 @@ signUpRouter.post("/", async (req, res) => {
   const refreshToken = "";
   try {
     const hash = await bcrypt.hash(pwd.toString(), 10);
-    const newUser = {user, pwd: hash, joinTime, perDescr, refreshToken};
+    const newUser = {user, pwd: hash, joinTime, perDescr, refreshToken, profilePictureURL};
     await UserModel.create(newUser);
     res.send(true);
   } catch (err) {

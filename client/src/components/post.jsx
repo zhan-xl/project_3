@@ -26,7 +26,7 @@ export default function Post(props) {
   }
   useEffect(() => {
     profilePicture();
-  }, [])
+  }, [props.user])
 
   return (
       <div className="grid-container">
