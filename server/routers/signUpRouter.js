@@ -7,6 +7,7 @@ signUpRouter.post("/", async (req, res) => {
   const {user, pwd, perDescr} = req.body;
   const joinTime = new Date();
   const refreshToken = "";
+  const profilePictureURL = null;
   try {
     const hash = await bcrypt.hash(pwd.toString(), 10);
     const newUser = {user, pwd: hash, joinTime, perDescr, refreshToken, profilePictureURL};

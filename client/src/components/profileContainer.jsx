@@ -57,7 +57,7 @@ export default function ProfileContainer(props) {
             '/user/findByName/' + visitUserName
           );
           if (userResponse.data.user === undefined) {
-            //setNotFound(true); // maybe make an api call to delete not existing user's post
+            setNotFound(true); // maybe make an api call to delete not existing user's post
           }
           setUser(userResponse.data);
         } catch (err) {}
@@ -66,9 +66,9 @@ export default function ProfileContainer(props) {
     fetchUser().then();
   }, [visitUserName]);
 
-  // if (notFound) {
-  //   return (<div>User does not exist</div>);
-  // }
+  if (notFound) {
+    return (<div>User does not exist</div>);
+  }
 
   return (
     <div className="profile-container">
