@@ -10,6 +10,15 @@
   border-radius: 16px;
 }
 
+@media screen and (max-width: 600px) {
+  .container {
+    position: relative !important;
+    transform: none !important;
+    top: 0% !important;
+    left: 0% !important;
+   }
+}
+
 .sign-in {
   font-size: 24px;
   font-weight: 500;

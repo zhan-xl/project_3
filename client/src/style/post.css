@@ -8,6 +8,16 @@
   position: relative;
 }
 
+@media screen and (max-width: 600px) {
+  .grid-container {
+    width: 250px;
+  }
+
+  .post-img {
+    width: 150px !important;
+  }
+}
+
 .grid-container:hover {
   background-color: rgba(0, 0, 0, 0.08);
 }

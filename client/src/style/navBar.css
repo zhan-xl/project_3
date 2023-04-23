@@ -1,5 +1,6 @@
 .navbar-frame {
   display: flex;
+  flex-wrap: wrap;
   padding: 10px;
   justify-content: space-between;
 }
@@ -82,11 +83,12 @@
 }
 
 @media screen and (max-width: 600px) {
-  .navbar-button {
-    font-size: 16px;
+  .btn {
+    font-size: 12px;
+    margin: 2px;
   }
 
   .navbar-username {
-    font-size: 16px;
+    font-size: 12px;
   }
 }
