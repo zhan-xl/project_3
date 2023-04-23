@@ -20,11 +20,11 @@ export default function NavBar(props) {
       <div className='navbar-frame'>
 
         <div className="navbar-box-left">
-          <div className="btn"><Link to={"/"}>Home</Link></div>
-          <div className="btn"><Link to={"/search"}>Search</Link></div>
+          <div ><Link to={"/"} className="btn">Home</Link></div>
+          <div ><Link to={"/search"} className="btn">Search</Link></div>
           {logInUserName ?
-              (<div className="btn">
-                <Link to={"/new-post"}>
+              (<div>
+                <Link to={"/new-post"} className="btn">
                   New Post
                 </Link>
               </div>) :
@@ -38,8 +38,8 @@ export default function NavBar(props) {
               <div className="navbar-username">
                     Welcome {logInUserName}!
                 </div>
-                <div className="btn">
-                  <Link to={"/profile/" + logInUserName}>
+                <div>
+                  <Link to={"/profile/" + logInUserName} className="btn">
                     My Profile
                   </Link>
                 </div>
