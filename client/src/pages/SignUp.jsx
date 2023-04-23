@@ -75,7 +75,7 @@ const SignUp = () => {
                     value={perDescr}
                     required
                 />
-                <button className="submit-button"
+                <button className="btn"
                         disabled={!user || !pwd || !perDescr}>Submit
                 </button>
               </form>

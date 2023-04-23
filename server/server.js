@@ -42,6 +42,6 @@ mongoose.connect(mongoUri, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
-app.listen(8000, function() {
-  console.log("Server started on port 8000")
-});
+app.listen( 8000, function() {
+  console.log("Starting server now...")
+})
