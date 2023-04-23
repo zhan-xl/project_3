@@ -16,12 +16,14 @@ export default function Post(props) {
   async function deletePost() {
     if (props.post_id) { // if statement is needed or gets 500 error
       const storage = getStorage(app);
-      const imgRef = ref(storage, props.path);
-      // Delete the img from firebase first
-      deleteObject(imgRef).then(() => {
+      if (props.path) {
+        const imgRef = ref(storage, props.path);
+        // Delete the img from firebase first
+        deleteObject(imgRef).then(() => {
 
-      }).catch((error) => {
-      });
+        }).catch((error) => {
+        });
+      }
       await axios.delete('/post/' + props.post_id);
       window.location.reload();
     }
