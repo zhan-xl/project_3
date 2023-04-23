@@ -20,24 +20,6 @@ postRouter.post("/new-post", async (req, res) => {
   }
 })
 
-// postRouter.put("/postImgUpload/:postId", async (req, res) => {
-//   cookies = req.cookies;
-//   if (cookies) {
-//     const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
-//     res.send(foundUser)
-//     const post = await PostModel.findById(req.params.postId);
-//     // if (post.postedBy == foundUser.user) {
-//     //   await PostModel.findOneAndUpdate({_id: new mongoose.Types.ObjectId(req.params.postId)}, 
-//     //                                    {$set: {imagePath: req.body.imagePath,}},
-//     //                                    {new: true});
-//     // res.status(200).send('img path added');
-//     // } else {
-//     //   res.status(500).send('img path not added');
-//     // }
-
-//   }
-// })
-
 //getting all posts
 postRouter.get("/", async (req, res) => {
   try {
@@ -78,7 +60,8 @@ postRouter.delete('/:postId', async function (req, res) {
 
 postRouter.put('/:postId', async function (req, res) {
   const cookies = req.cookies;
-  
+  const imagePath = req.body.imagePath;
+  const downloadURL = req.body.url;
   if (cookies.jwt){
     const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
     const post = await PostModel.findById(req.params.postId);
@@ -86,6 +69,7 @@ postRouter.put('/:postId', async function (req, res) {
     if (post.postedBy == foundUser.user) {
       await PostModel.findOneAndUpdate({_id: new mongoose.Types.ObjectId(req.params.postId)}, 
                                        {$set: {postCont: req.body.postContent,
+                                        imagePath: imagePath, downloadURL: downloadURL,
                                       postTime: new Date()}}, {new: true});
       res.status(200).send('post has been updated');
     }

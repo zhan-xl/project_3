@@ -66,3 +66,7 @@
   float: right;
   margin-right: 4px;
 }
+
+.post-img {
+  width: 300px;
+}
