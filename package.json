@@ -1,0 +1,17 @@
+{
+  "name": "project_3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run dev -w server\" \"npm start -w client\"",
+    "build": "npm run build -ws --if-present"
+  },
+  "author": "",
+  "license": "ISC"
+}
