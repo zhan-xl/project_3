@@ -7,6 +7,7 @@ const userRouter = require("./routers/userRouter");
 const postRouter = require("./routers/postRouter");
 const logOutRouter = require("./routers/logOutRouter");
 const cookieParser = require('cookie-parser');
+const path = require("path");
 
 const SIGN_UP_URL = "/signUp";
 const LOG_IN_URL = "/logIn";
@@ -23,6 +24,14 @@ app.use(SIGN_UP_URL, signUpRouter);
 app.use(USER_URL, userRouter);
 app.use(POST_URL, postRouter);
 app.use(LOG_OUT_URL, logOutRouter);
+
+let frontend_dir = path.join(__dirname, '..', 'client', 'build')
+
+app.use(express.static(frontend_dir));
+app.get('*', function (req, res) {
+  console.log("received request");
+  res.sendFile(path.join(frontend_dir, "index.html"));
+});
 
 const mongoUri = "mongodb+srv://zhanxl:xafzu9-decvov-fibNyd@xiaolinwebdev.sq1refr.mongodb.net/project3?retryWrites=true&w=majority";
 
