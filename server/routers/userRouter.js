@@ -10,7 +10,7 @@ userRouter.get("/", async (req, res) => {
     return res.send('') // when logging out, if we send 422 errorcode, we get error in console
   }
   const foundUser = await UserModel.findOne({refreshToken: cookie.jwt});
-  res.send({user: foundUser.user, joinTime: foundUser.joinTime, perDescr: foundUser.perDescr});
+  res.send({user: foundUser?.user, joinTime: foundUser?.joinTime, perDescr: foundUser?.perDescr});
 })
 
 userRouter.get("/findByName/:userName", async (req, res) => {
