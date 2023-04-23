@@ -75,9 +75,11 @@ const SignUp = () => {
                     value={perDescr}
                     required
                 />
-                <button className="btn"
-                        disabled={!user || !pwd || !perDescr}>Submit
-                </button>
+                <div>
+                  <button className="btn"
+                          disabled={!user || !pwd || !perDescr}>Submit
+                  </button>
+                </div>
               </form>
               <div className="register-prompt">
                 Already registered? <Link to='/log-in' className="line">Sign in here</Link>
