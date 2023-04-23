@@ -15,7 +15,7 @@ export default function Edit() {
   const [postContent, setPostContent] = useState("");
 
   const location = useLocation();
-  const {id, path} = location.state;
+  const {id, path, postTime} = location.state;
   const navigate = useNavigate();
   const [img, setImage] = useState(null);
 
@@ -29,7 +29,7 @@ export default function Edit() {
         const uploadTask = uploadBytesResumable(imagePath, img);
         getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
           await axios.put('/post/' + id, JSON.stringify({
-                postContent, imagePath: imagePath.fullPath,
+                postContent, postTime, imagePath: imagePath.fullPath,
                 url: downloadURL,
               }),
               {

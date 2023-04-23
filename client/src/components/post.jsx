@@ -10,7 +10,7 @@ export default function Post(props) {
   const [imgURL, setImgURL] = useState(null);
 
   async function updatePost() {
-    navigate('/edit', {replace: true, state: {id: props.post_id, path: props.path}});
+    navigate('/edit', {replace: true, state: {id: props.post_id, path: props.path, postTime: props.postTime}});
   }
 
   async function deletePost() {

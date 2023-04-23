@@ -62,6 +62,7 @@ postRouter.put('/:postId', async function (req, res) {
   const cookies = req.cookies;
   const imagePath = req.body.imagePath;
   const downloadURL = req.body.url;
+  const postTime = req.body.postTime;
   if (cookies.jwt){
     const foundUser = await UserModel.findOne({refreshToken: cookies.jwt});
     const post = await PostModel.findById(req.params.postId);
@@ -70,7 +71,7 @@ postRouter.put('/:postId', async function (req, res) {
       await PostModel.findOneAndUpdate({_id: new mongoose.Types.ObjectId(req.params.postId)}, 
                                        {$set: {postCont: req.body.postContent,
                                         imagePath: imagePath, downloadURL: downloadURL,
-                                      postTime: new Date()}}, {new: true});
+                                      postTime}}, {new: true});
       res.status(200).send('post has been updated');
     }
     else {
