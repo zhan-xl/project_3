@@ -9,7 +9,7 @@ logInRouter.post("/", async (req, res) => {
   const {user, pwd} = req.body;
   const foundUser = await UserModel.findOne({user});
   if (!foundUser) {
-    return res.status(401);
+    return res.sendStatus(401);
   }
   const match = await bcrypt.compare(pwd.toString(), foundUser.pwd);
   if (match) {
@@ -23,7 +23,7 @@ logInRouter.post("/", async (req, res) => {
     res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
     res.send(foundUser.id);
   } else {
-    res.status(401);
+    res.sendStatus(401);
   }
 })
 
