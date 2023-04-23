@@ -27,6 +27,8 @@ export default function PostContainer(props) {
     fetchPosts().then();
   }, [visitUserName, editable]);
 
+  console.log(posts)
+
   return (
       <ul className="grid">
         {posts.map((post, index) => (
@@ -37,6 +39,7 @@ export default function PostContainer(props) {
                 postTime={post.postTime}
                 editable={editable}
                 post_id={post._id}
+                img = {post.downloadURL}
             />))}
       </ul>
   )
