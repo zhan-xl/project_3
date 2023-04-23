@@ -22,7 +22,6 @@ app.use(LOG_IN_URL, logInRouter);
 app.use(SIGN_UP_URL, signUpRouter);
 app.use(USER_URL, userRouter);
 app.use(POST_URL, postRouter);
-
 app.use(LOG_OUT_URL, logOutRouter);
 
 const mongoUri = "mongodb+srv://zhanxl:xafzu9-decvov-fibNyd@xiaolinwebdev.sq1refr.mongodb.net/project3?retryWrites=true&w=majority";

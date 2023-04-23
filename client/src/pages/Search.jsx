@@ -19,9 +19,10 @@ export default function Search() {
           <input type="text"
                  className="input"
                  value={input}
+                 placeholder="Type username here..."
                  onChange={e => setInput(e.target.value)}
           />
-          <button className="search-btn" onClick={handleSearch}>Search</button>
+          <button className="btn" onClick={handleSearch}>Search</button>
           <ul>
             {users.map((user, index) => (
                 <li key={index}><Link to={"/profile/" + user} className="link" >{user}</ Link></li>))}
