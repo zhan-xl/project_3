@@ -27,7 +27,7 @@ export default function PostContainer(props) {
     fetchPosts().then();
   }, [visitUserName, editable]);
 
-  console.log(posts)
+  //console.log(posts)
 
   return (
       <ul className="grid">
@@ -40,6 +40,7 @@ export default function PostContainer(props) {
                 editable={editable}
                 post_id={post._id}
                 img = {post.downloadURL}
+                path = {post.imagePath}
             />))}
       </ul>
   )

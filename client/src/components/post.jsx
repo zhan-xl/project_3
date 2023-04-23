@@ -2,17 +2,26 @@ import React, {useEffect, useState} from "react";
 import "../style/post.css"
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import app from '../firebase';
 
 export default function Post(props) {
   const navigate = useNavigate();
   const [imgURL, setImgURL] = useState(null);
 
   async function updatePost() {
-    navigate('/edit', {replace: true, state: {id: props.post_id}});
+    navigate('/edit', {replace: true, state: {id: props.post_id, path: props.path}});
   }
 
   async function deletePost() {
     if (props.post_id) { // if statement is needed or gets 500 error
+      const storage = getStorage(app);
+      const imgRef = ref(storage, props.path);
+      // Delete the img from firebase first
+      deleteObject(imgRef).then(() => {
+
+      }).catch((error) => {
+      });
       await axios.delete('/post/' + props.post_id);
       window.location.reload();
     }
@@ -51,7 +60,7 @@ export default function Post(props) {
         </div>
         <div className="content">{props.postCont}</div>
         <div className="content">
-          <img src={props.img} alt=""></img>
+          <img src={props.img} alt="" className="post-img"></img>
           </div>
       </div>
   )
