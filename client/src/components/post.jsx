@@ -50,6 +50,9 @@ export default function Post(props) {
           : ''}
         </div>
         <div className="content">{props.postCont}</div>
+        <div className="content">
+          <img src={props.img} alt=""></img>
+          </div>
       </div>
   )
 }

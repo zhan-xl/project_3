@@ -22,6 +22,7 @@ export default function NewPost() {
       headers: {"Content-Type": "application/json"},
       withCredentials: true
     });
+    navigate(-1); // going back to where I was
   } catch (err) {}
   }
   else {
@@ -37,17 +38,17 @@ export default function NewPost() {
         {
           postCont, 
           imagePath: imagePath.fullPath, 
-          url: JSON.stringify(downloadURL),
+          url: downloadURL,
         },
         {
           headers: {"Content-Type": "application/json"},
           withCredentials: true
         });
+        navigate(-1); // going back to where I was
       } catch (err) {
       }
     });
   }
-    navigate(-1); // going back to where I was. Good to learn this -XZ.
   }
 
   return (

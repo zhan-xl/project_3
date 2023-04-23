@@ -27,6 +27,8 @@ export default function PostContainer(props) {
     fetchPosts().then();
   }, [visitUserName, editable]);
 
+  console.log(posts)
+
   return (
       <ul className="grid">
         {posts.map((post, index) => (
