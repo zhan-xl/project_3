@@ -3,8 +3,13 @@ import "../style/NewPost.css"
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import app from '../firebase';
-import { v4 as uuid } from 'uuid';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {v4 as uuid} from 'uuid';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from "firebase/storage";
 
 export default function NewPost() {
 
@@ -14,41 +19,41 @@ export default function NewPost() {
 
   async function post() {
     if (image == null) {
-    try {
-        await axios.post(
-    "/post/new-post",
-    {postCont},
-    {
-      headers: {"Content-Type": "application/json"},
-      withCredentials: true
-    });
-    navigate(-1); // going back to where I was
-  } catch (err) {}
-  }
-  else {
-    // uuid to make each file in images folder have a unique name
-    const storage = getStorage(app);
-    const imagePath = ref(storage, `/images/${image.name + uuid()}`);
-    // uploading
-    const uploadTask = uploadBytesResumable(imagePath, image);
-    getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
       try {
-            await axios.post(
-        "/post/new-post",
-        {
-          postCont, 
-          imagePath: imagePath.fullPath, 
-          url: downloadURL,
-        },
-        {
-          headers: {"Content-Type": "application/json"},
-          withCredentials: true
-        });
+        await axios.post(
+            "/post/new-post",
+            {postCont},
+            {
+              headers: {"Content-Type": "application/json"},
+              withCredentials: true
+            });
         navigate(-1); // going back to where I was
       } catch (err) {
       }
-    });
-  }
+    } else {
+      // uuid to make each file in images folder have a unique name
+      const storage = getStorage(app);
+      const imagePath = ref(storage, `/images/${image.name + uuid()}`);
+      // uploading
+      const uploadTask = uploadBytesResumable(imagePath, image);
+      getDownloadURL((await uploadTask).ref).then(async (downloadURL) => {
+        try {
+          await axios.post(
+              "/post/new-post",
+              {
+                postCont,
+                imagePath: imagePath.fullPath,
+                url: downloadURL,
+              },
+              {
+                headers: {"Content-Type": "application/json"},
+                withCredentials: true
+              });
+          navigate(-1); // going back to where I was
+        } catch (err) {
+        }
+      });
+    }
   }
 
   return (
@@ -59,13 +64,16 @@ export default function NewPost() {
                   onChange={e => setPostCont(e.target.value)}
                   className="textarea"/>
         <input type="file" onChange={e => setImage(e.target.files[0])}
-          accept="image/*" >
-        </input> 
-        <div className="post-button" onClick={() => {
-                  post();
-                }}>
-          Post
+               accept="image/*">
+        </input>
+        <div style={{"text-align": "end"}}>
+          <button className="btn" onClick={() => {
+            post();
+          }}>
+            Post
+          </button>
         </div>
+
       </div>
   )
 }

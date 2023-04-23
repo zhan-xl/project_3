@@ -70,7 +70,9 @@ const LogIn = () => {
               value={pwd}
               required
           />
-          <button className="log-in-button">Log In</button>
+          <div>
+            <button className="btn">Log In</button>
+          </div>
         </form>
         <div><Link to="/sign-up" className="sign-up-letter">No account? Sign up
           here.</Link></div>
